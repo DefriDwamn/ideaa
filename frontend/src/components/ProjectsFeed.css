@@ -1,0 +1,35 @@
+.project-feed {
+    width: 100%; /* Занимаем всю доступную ширину */
+    max-width: 1200px; /* Ограничиваем максимальную ширину на больших экранах */
+    min-width: 600px;
+    border-radius: 15px;
+    overflow-y: auto;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(231, 231, 231, 0.65);
+    box-sizing: border-box; /* Убедимся, что padding учитывается в ширине */
+}
+
+.project-post-item {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    color: black;
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-post-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}

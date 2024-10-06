@@ -1,0 +1,24 @@
+.whole-page-container {
+    text-align: center;
+}
+
+.title {
+    font-size: 72px;
+    margin: 0;
+}
+
+.join-button {
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 30px;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s ease;
+    margin-top: 20px;
+}
+
+.join-button:hover {
+    background: #e0e0e0;
+}

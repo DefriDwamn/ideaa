@@ -1,0 +1,60 @@
+/* Общие стили для форм логина и регистрации */
+.login-form,
+.register-form {
+    display: block;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    width: 300px;
+    padding: 20px;
+    box-sizing: border-box; /* Убедимся, что padding учитывается в общей ширине */
+}
+
+/* Стили для инпутов */
+.form-input {
+    width: 100%; /* Устанавливаем ширину на 100%, чтобы она совпадала с кнопками */
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    box-sizing: border-box; /* Гарантируем, что padding учитывается в ширине */
+}
+
+/* Стили для кнопок */
+.form-button {
+    width: 100%; /* Ширина 100%, чтобы соответствовать инпутам */
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* Убедимся, что padding учитывается в общей ширине */
+}
+
+/* Анимация кнопки при наведении */
+.form-button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Стили для ссылок */
+.form-link {
+    display: block;
+    margin: 10px 0;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* Стили для ссылок при наведении */
+.form-link:hover {
+    text-decoration: underline;
+}

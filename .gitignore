@@ -1,0 +1,65 @@
+# Node modules
+frontend/node_modules/
+frontend/.npm/
+frontend/.cache/
+frontend/.parcel-cache/
+
+# Build artifacts
+frontend/build/
+frontend/dist/
+frontend/out/
+frontend/.next/
+frontend/.nuxt/
+
+# Logs
+frontend/logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# IDE или редакторы (опционально)
+frontend/.idea/
+frontend/.vscode/
+
+# Кэш браузера и прочие временные файлы
+frontend/.DS_Store
+frontend/.eslintcache
+frontend/*.log
+frontend/*.tsbuildinfo
+frontend/.env.local
+
+# Python
+backend/__pycache__/
+backend/*.py[cod]
+backend/*.so
+backend/*.egg
+backend/*.egg-info/
+backend/dist/
+backend/build/
+
+# Django
+backend/db.sqlite3
+backend/db.sqlite3-journal
+backend/media/
+backend/staticfiles/
+backend/static/
+backend/.env
+
+# Logs
+backend/logs/
+backend/*.log
+
+# venv (виртуальная среда)
+backend/venv/
+backend/.venv/
+
+# IDE и редакторы
+.idea/
+.vscode/
+.spyderproject
+.ropeproject
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+.coverage
+.pytest_cache/
