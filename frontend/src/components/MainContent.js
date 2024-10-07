@@ -3,7 +3,7 @@ import './MainContent.css';
 import IdeasFeed from './IdeasFeed';
 import ProjectsFeed from './ProjectsFeed';
 
-const MainContent = () => {
+const MainContent = ({ onLogout }) => {
   const [currentView, setCurrentView] = useState('ideas');
 
   return (
@@ -14,6 +14,11 @@ const MainContent = () => {
         </div>
         <div className="menu-item" onClick={() => setCurrentView('projects')}>
           <img src="/images/folder-icon.png" alt="Задачи" />
+        </div>
+        
+        <div className="menu-item logout" onClick={onLogout}>
+          <img src="/images/logout-icon.png" alt="Выход" />
+          <span>Выйти</span>
         </div>
       </div>
       {currentView === 'ideas' && <IdeasFeed />}

@@ -8,7 +8,6 @@
     box-sizing: border-box; 
 }
 
-
 .side-menu {
     min-width: 80px;
     background-color: rgba(231, 231, 231, 0.65);
@@ -46,4 +45,13 @@
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
     transform: scale(1.1);
     border-radius: 15px;
+}
+
+.logout {
+    margin-top: auto; /* Размещает значок выхода внизу меню */
+    background-color: #ffcccc; /* Светло-красный фон, чтобы выделить кнопку */
+}
+
+.logout:hover {
+    background-color: #ff9999; /* Фон при наведении */
 }

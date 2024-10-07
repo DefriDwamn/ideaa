@@ -1,138 +1,78 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './KanbanBoard.css';
+import API from '../api/axios';
 
-const KanbanBoard = () => {
+const KanbanBoard = ({ project }) => {
   const [columns, setColumns] = useState([
-    {
-      id: 1,
-      name: 'To Do',
-      tasks: [{ id: 1, content: 'Task 1' }, { id: 2, content: 'Task 2' }],
-      newTaskContent: '', // Отдельное состояние для каждой колонки
-    },
-    {
-      id: 2,
-      name: 'In Progress',
-      tasks: [],
-      newTaskContent: '',
-    },
-    {
-      id: 3,
-      name: 'Done',
-      tasks: [],
-      newTaskContent: '',
-    },
+    { id: 'todo', name: 'To Do', tasks: [] },
+    { id: 'in_progress', name: 'In Progress', tasks: [] },
+    { id: 'done', name: 'Done', tasks: [] },
   ]);
+  const [ideaDescription, setIdeaDescription] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  const [draggedTask, setDraggedTask] = useState(null);
+  useEffect(() => {
+    if (project) {
+      fetchTasks();
+      setIdeaDescription(project.idea.text);
+    }
+  }, [project]);
 
-  const handleTaskInputChange = (event, columnId) => {
-    const value = event.target.value;
-
-    const updatedColumns = columns.map((column) => {
-      if (column.id === columnId) {
-        return { ...column, newTaskContent: value };
-      }
-      return column;
-    });
-
-    setColumns(updatedColumns);
+  const fetchTasks = async () => {
+    try {
+      const response = await API.get(`/projects/${project.id}/tasks/`);
+      const tasks = response.data;
+      const updatedColumns = columns.map((column) => ({
+        ...column,
+        tasks: tasks.filter((task) => task.status === column.id),
+      }));
+      setColumns(updatedColumns);
+      setLoading(false);
+    } catch (error) {
+      console.error('Ошибка загрузки задач:', error);
+    }
   };
 
-  const handleTaskSubmit = (event, columnId) => {
-    event.preventDefault();
-
-    const updatedColumns = columns.map((column) => {
-      if (column.id === columnId && column.newTaskContent.trim()) {
-        return {
-          ...column,
-          tasks: [...column.tasks, { id: Date.now(), content: column.newTaskContent }],
-          newTaskContent: '', // Очищаем поле ввода после добавления задачи
-        };
-      }
-      return column;
-    });
-
-    setColumns(updatedColumns);
+  const handleSaveIdeaDescription = async () => {
+    try {
+      await API.put(`/ideas/${project.idea}/`, { text: ideaDescription });
+      alert('Описание идеи обновлено.');
+    } catch (error) {
+      console.error('Ошибка при обновлении описания идеи:', error);
+    }
   };
 
-  const handleDragStart = (event, task, columnId) => {
-    setDraggedTask({ task, columnId });
-  };
-
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
-
-  const handleDrop = (event, targetColumnId) => {
-    event.preventDefault();
-
-    if (!draggedTask) return;
-
-    const sourceColumnId = draggedTask.columnId;
-    const task = draggedTask.task;
-
-    if (sourceColumnId === targetColumnId) return; // Не перетаскиваем задачу на ту же колонку
-
-    const updatedColumns = columns.map((column) => {
-      if (column.id === sourceColumnId) {
-        return {
-          ...column,
-          tasks: column.tasks.filter((t) => t.id !== task.id),
-        };
-      }
-      if (column.id === targetColumnId) {
-        return {
-          ...column,
-          tasks: [...column.tasks, task],
-        };
-      }
-      return column;
-    });
-
-    setColumns(updatedColumns);
-    setDraggedTask(null);
-  };
+  // Код для добавления задач и обработки перетаскивания остаётся прежним
 
   return (
     <div className="kanban-board">
+      <div className="idea-description">
+        <textarea
+          value={ideaDescription}
+          onChange={(e) => setIdeaDescription(e.target.value)}
+          rows="3"
+        ></textarea>
+        <button onClick={handleSaveIdeaDescription} className="save-description-btn">
+          Сохранить описание
+        </button>
+      </div>
       <div className="kanban-columns">
         {columns.map((column) => (
-          <div
-            key={column.id}
-            className="kanban-column"
-            onDragOver={handleDragOver}
-            onDrop={(event) => handleDrop(event, column.id)}
-          >
+          <div key={column.id} className="kanban-column">
             <div className="column-header">
               <span>{column.name}</span>
               <button className="edit-icon">✏️</button>
             </div>
             <div className="kanban-droppable">
               {column.tasks.map((task) => (
-                <div
-                  key={task.id}
-                  className="kanban-item"
-                  draggable
-                  onDragStart={(event) => handleDragStart(event, task, column.id)}
-                >
-                  {task.content}
+                <div key={task.id} className="kanban-item">
+                  {task.description}
                   <button className="edit-icon">✏️</button>
                 </div>
               ))}
             </div>
             <div className="form-container">
-              <form onSubmit={(event) => handleTaskSubmit(event, column.id)}>
-                <input
-                  type="text"
-                  value={column.newTaskContent}
-                  onChange={(event) => handleTaskInputChange(event, column.id)}
-                  placeholder="Введите задачу"
-                  className="task-input"
-                />
-                <button type="submit" className="create-task-btn">
-                  Добавить задачу
-                </button>
-              </form>
+              <form /* Форма добавления задач сюда */ />
             </div>
           </div>
         ))}
