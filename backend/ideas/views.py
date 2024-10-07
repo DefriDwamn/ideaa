@@ -54,7 +54,8 @@ class LikeCreateView(generics.CreateAPIView):
         if not сomment:
             raise ValidationError({'detail': 'Comment is required when liking an idea.'})
 
-        serializer.save(user=user, idea=idea, comment=сomment)
+        serializer.save(user=user, idea=idea, comment=сomment, type='like')  # Здесь указываем тип "like"
+
 
 class DislikeCreateView(generics.CreateAPIView):
     queryset = Like.objects.all()
@@ -75,8 +76,8 @@ class DislikeCreateView(generics.CreateAPIView):
         if idea.author == user:
             raise ValidationError({'detail': 'You cannot dislike your own idea.'})
 
-        serializer.save(user=user, idea=idea, type="dislike")
-
+        serializer.save(user=user, idea=idea, type='dislike')  # Здесь указываем тип "dislike"
+        
 class FilteredIdeasView(generics.ListAPIView):
     serializer_class = IdeaSerializer
     permission_classes = [permissions.IsAuthenticated]

@@ -26,10 +26,9 @@ class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like
         fields = ('id', 'user', 'idea', 'comment', 'type')
-        read_only_fields = ('user', 'idea')
+        read_only_fields = ('user', 'idea', 'type')
 
     def validate(self, data):
-        if data['type'] == 'like' and not data.get('comment'):
+        if self.context['view'].kwargs.get('like_or_dislike') == 'like' and not data.get('comment'):
             raise serializers.ValidationError({"comment": "Comment is required for likes."})
-
         return data
